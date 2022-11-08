@@ -10,32 +10,42 @@ exports.checkBody = (req, res, next) => {
     next();
 };
 
-exports.getAllTours = (req, res) => {
-    console.log(req.requestTime);
-    res.status(200).json({
-        status: 'success',
-        requestedAt: req.requestTime,
-        // length: tours.length,
-        // data: {
-        //     tours,
-        // },
-    });
+exports.getAllTours = async (req, res) => {
+    try {
+        const tours = await Tour.find();
+
+        res.status(200).json({
+            status: 'success',
+            results: tours.length,
+            data: {
+                tours,
+            },
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'Fail!',
+            message: err,
+        });
+    }
 };
 
-exports.getTour = (req, res) => {
-    console.log(req.params);
-    // result ud in req.params.id is 'string', it is a trick to have a return as int by multiply it to 1
-    const id = req.params.id * 1;
+exports.getTour = async (req, res) => {
+    try {
+        const tour = await Tour.findById(req.params.id);
+        // Tour.findOne({ _id: req.params.id })
 
-    // const tour = tours.find((el) => el.id === id);
-
-    res.status(200).json({
-        status: 'success',
-        // length: tours.length,
-        // data: {
-        //     tour,
-        // },
-    });
+        res.status(200).json({
+            status: 'success',
+            data: {
+                tour,
+            },
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'Fail!',
+            message: err,
+        });
+    }
 };
 
 exports.createTour = async (req, res) => {
