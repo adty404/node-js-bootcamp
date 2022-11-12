@@ -3,6 +3,14 @@ const tourController = require('./../controllers/tourController');
 
 const router = express.Router();
 
+/*
+    1) Require the express module
+    2) Require the controller
+    3) Create a router from express.Router()
+    4) Create a route
+    5) Export the router
+*/
+
 // router.param('id', tourController.checkID);
 
 // Create a checkBody middleware

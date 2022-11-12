@@ -1,5 +1,12 @@
 const Tour = require('./../models/tourModel');
 
+/*
+    1) Require the model
+    2) Create a middleware function
+    3) Create a handler function
+    4) Export each handler function
+*/
+
 // Middleware
 exports.aliasTopTours = (req, res, next) => {
     req.query.limit = '5';

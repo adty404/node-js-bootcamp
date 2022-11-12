@@ -6,6 +6,17 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
+/*
+    1) Require the express module
+    2) Require the morgan module (OPTIONAL)
+    3) Require the tourRouter
+    4) Require the userRouter
+    5) Create the app from express()
+    6) Mount the middleware
+    7) Mount the routers
+    8) Export the app
+*/
+
 // 1) MIDDLEWARES
 // console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {

@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+/*
+    1) Require the mongoose module
+    2) Define the schema (mongoose.Schema({}))
+    3) Create the model (mongoose.model('ModelName', schema))
+    4) Export the model
+*/
+
 const tourSchema = new mongoose.Schema({
     name: {
         type: String,

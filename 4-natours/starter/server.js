@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+/*
+    1) Require the mongoose module
+    2) Require the dotenv module
+    3) Initialize dotenv.config()
+    4) Connect to the database
+    5) Define the app
+    6) Start the server
+*/
+
 dotenv.config({
     path: './config.env',
 });
