@@ -13,22 +13,33 @@ exports.checkBody = (req, res, next) => {
 exports.getAllTours = async (req, res) => {
     try {
         console.log(req.query);
+
         // BUILD QUERY
-        // 1) Filtering
-        const queryObj = { ...req.query };
+        // 1A) Filtering
+        const queryObj = { ...req.query }; // hard copy
         const excludedFields = ['page', 'sort', 'limit', 'fields'];
         excludedFields.forEach((el) => delete queryObj[el]);
 
-        // 2) Advanced filtering
+        // 1B) Advanced filtering
         let queryStr = JSON.stringify(queryObj);
-        // a replace method, actually accpet a callback in a first argument (match word/ match string)
         queryStr = queryStr.replace(
             /\b(gte|gt|lte|lt)\b/g,
             (match) => `$${match}`
         );
         console.log(JSON.parse(queryStr));
 
-        const query = await Tour.find(JSON.parse(queryStr));
+        const query = Tour.find(JSON.parse(queryStr));
+
+        // 2) Sorting
+        if (req.query.sort) {
+            // ?sort=-price is for DESC
+            // ?sort=price is for ASC <- default
+            const sortBy = req.query.sort.split(',').join(' ');
+            query.sort(sortBy);
+        } else {
+            query.sort('-createdAt');
+            // query.sort({ _id: -1 }); // faster
+        }
 
         // EXECUTE QUERY
         const tours = await query;
