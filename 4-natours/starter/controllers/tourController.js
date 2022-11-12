@@ -41,6 +41,14 @@ exports.getAllTours = async (req, res) => {
             // query.sort({ _id: -1 }); // faster
         }
 
+        // 3) Field limiting
+        if (req.query.fields) {
+            const fields = req.query.fields.split(',').join(' ');
+            query.select(fields);
+        } else {
+            query.select('-__v');
+        }
+
         // EXECUTE QUERY
         const tours = await query;
 
