@@ -3,9 +3,10 @@ const APIFeatures = require('./../utils/apiFeatures');
 
 /*
     1) Require the model
-    2) Create a middleware function
-    3) Create a handler function
-    4) Export each handler function
+    2) Require any utils
+    3) Create a middleware function
+    4) Create a handler function
+    5) Export each handler function
 */
 
 // Middleware
