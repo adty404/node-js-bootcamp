@@ -119,6 +119,7 @@ exports.deleteTour = async (req, res) => {
     }
 };
 
+// Handler using aggregation pipeline
 exports.getTourStats = async (req, res) => {
     try {
         const stats = await Tour.aggregate([
