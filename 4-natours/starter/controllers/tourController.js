@@ -119,7 +119,7 @@ exports.deleteTour = async (req, res) => {
     }
 };
 
-// Handler using aggregation pipeline
+// Handler using aggregation pipeline stages
 exports.getTourStats = async (req, res) => {
     try {
         const stats = await Tour.aggregate([
@@ -149,6 +149,60 @@ exports.getTourStats = async (req, res) => {
             status: 'success',
             data: {
                 stats,
+            },
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'Fail!',
+            message: err,
+        });
+    }
+};
+
+// Handler using aggregation pipeline stages with undiwnd and project
+exports.getMonthlyPlan = async (req, res) => {
+    try {
+        const year = req.params.year * 1; // 2021
+
+        const plan = await Tour.aggregate([
+            {
+                $unwind: '$startDates',
+            },
+            {
+                $match: {
+                    startDates: {
+                        $gte: new Date(`${year}-01-01`),
+                        $lte: new Date(`${year}-12-31`),
+                    },
+                },
+            },
+            {
+                $group: {
+                    _id: { $month: '$startDates' },
+                    numTourStarts: { $sum: 1 },
+                    tours: { $push: '$name' },
+                },
+            },
+            {
+                $addFields: { month: '$_id' },
+            },
+            {
+                $project: {
+                    _id: 0, // 0 to hide, 1 to show
+                },
+            },
+            {
+                $sort: { numTourStarts: -1 }, // -1 for descending
+            },
+            {
+                $limit: 12,
+            },
+        ]);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                plan,
             },
         });
     } catch (err) {
