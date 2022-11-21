@@ -25,6 +25,7 @@ mongoose
         useNewUrlParser: true,
         useCreateIndex: true,
         useFindAndModify: false,
+        useUnifiedTopology: true, // additional cause of error (node:16944) [MONGODB DRIVER] Warning: Current Server Discovery and Monitoring engine is deprecated
     })
     .then(() => console.log('DB connection successful!'));
 
