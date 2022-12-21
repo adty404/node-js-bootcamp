@@ -77,6 +77,13 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 };
 
 userSchema.methods.createPasswordResetToken = function () {
+    /* LOGIC */
+    // resetToken is a random string that will be sent to the user's email
+    // passwordResetToken is the hashed version of the resetToken that will be saved in the DB
+    // passwordResetExpires is the time when the token will expire
+    // then resetToken will be compared to passwordResetToken in the DB
+    // and if they match, the user will be able to reset the password
+
     const resetToken = crypto.randomBytes(32).toString('hex');
 
     this.passwordResetToken = crypto
