@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema({
     passwordResetExpires: Date,
 });
 
+// middleware for hashing password if it is modified
 userSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified
     if (!this.isModified('password')) return next();
@@ -55,6 +56,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+// middleware for updating passwordChangedAt field if password is modified/changed (actually on authController.resetPassword)
 userSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
 
