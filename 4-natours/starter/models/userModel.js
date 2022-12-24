@@ -56,7 +56,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-// middleware for updating passwordChangedAt field if password is modified/changed (actually on authController.resetPassword)
+// middleware for updating passwordChangedAt field if password is modified/changed (example on authController.resetPassword and authController.updatePassword)
 userSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
 
